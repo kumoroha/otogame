@@ -33,8 +33,14 @@ body {
     background-color: #ffffff;
 }
 
-#score-display, #pause-button, #gacha-button, #gacha-result {
+#score-display, #rank-display, #pause-button, #gacha-button, #gacha-result {
     margin: 5px;
+}
+
+#score-display, #rank-display {
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
 
 #pause-button {
@@ -61,5 +67,41 @@ body {
 
 #gacha-result {
     color: #fff;
+    margin-top: 10px;
+}
+
+.hit-line {
+    position: absolute;
+    width: 100%;
+    height: 5vw; /* Same as note height */
+    background-color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+}
+
+.line1 {
+    bottom: 10vw; /* Adjust as needed for spacing */
+}
+
+.line2 {
+    bottom: 5vw; /* Adjust as needed for spacing */
+}
+
+#end-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#retry-button {
+    padding: 10px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    cursor: pointer;
     margin-top: 10px;
 }
