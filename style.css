@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #282c34;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+#game-container {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    background-color: #000;
+    border: 1px solid #fff;
+}
+
+#note-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.note {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #ff6347;
+}
+
+#score-display {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
