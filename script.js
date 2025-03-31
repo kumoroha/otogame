@@ -62,13 +62,13 @@ function createNote() {
     let noteInterval = setInterval(() => {
         if (isPaused) return;
         let top = parseInt(note.style.top);
-        if (top < (parseInt(noteContainer.style.height) || 80 * window.innerWidth / 100)) {
+        if (top < noteContainer.offsetHeight) {
             note.style.top = `${top + 15}px`; // Speed increased to 3x
         } else {
             clearInterval(noteInterval);
             note.remove();
         }
-    }, 50);
+    }, 20); // Reduced interval for smoother animation
 
     note.addEventListener('click', () => {
         clearInterval(noteInterval);
