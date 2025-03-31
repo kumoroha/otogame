@@ -68,7 +68,7 @@ function createNote() {
         if (isPaused) return;
         let top = parseInt(note.style.top);
         if (top < noteContainer.offsetHeight) {
-            note.style.top = `${top + 15}px`; // Speed increased to 3x
+            note.style.top = `${top + 10}px`; // Speed adjusted to be slower
         } else {
             clearInterval(noteInterval);
             note.remove();
