@@ -8,6 +8,9 @@ const endScreen = document.getElementById('end-screen');
 const finalScore = document.getElementById('final-score');
 const finalRank = document.getElementById('final-rank');
 const retryButton = document.getElementById('retry-button');
+const judgementDisplay = document.getElementById('judgement-display');
+const coinsDisplay = document.getElementById('coins-display');
+const fragmentsDisplay = document.getElementById('fragments-display');
 let score = 0;
 let isPaused = false;
 let noteIntervals = [];
@@ -16,6 +19,8 @@ let hitLines = [
     document.querySelector('.line1').offsetTop,
     document.querySelector('.line2').offsetTop
 ];
+let coins = parseInt(getCookie('coins')) || 0;
+let fragments = parseInt(getCookie('fragments')) || 0;
 
 const characters = [
     { name: '初音ミク', rank: '★1' },
@@ -67,6 +72,7 @@ function createNote() {
         } else {
             clearInterval(noteInterval);
             note.remove();
+            updateJudgement('MISS');
         }
     }, 20); // Reduced interval for smoother animation
 
@@ -83,12 +89,23 @@ function createNote() {
 
 function calculateHitScore(noteTop) {
     if (noteTop >= hitLines[1] - 5 && noteTop <= hitLines[1] + 5) {
+        updateJudgement('PERFECT');
         return 300;
     } else if (noteTop >= hitLines[0] - 5 && noteTop <= hitLines[0] + 5) {
+        updateJudgement('GREAT');
         return 100;
-    } else {
+    } else if (noteTop >= hitLines[0] - 10 && noteTop <= hitLines[0] + 10) {
+        updateJudgement('GOOD');
         return 50;
+    } else {
+        updateJudgement('BAD');
+        return 10;
     }
+}
+
+function updateJudgement(judgement) {
+    judgementDisplay.innerText = judgement;
+    setTimeout(() => judgementDisplay.innerText = '', 1000); // Clear judgement after 1 second
 }
 
 function updateScoreAndRank() {
@@ -116,6 +133,11 @@ function endGame() {
     endScreen.style.display = 'block';
     finalScore.innerText = `Final Score: ${score}`;
     finalRank.innerText = `Final Rank: ${calculateRank(score)}`;
+    coins += Math.floor(score / 10);
+    fragments += Math.floor(score / 10);
+    setCookie('coins', coins, 365);
+    setCookie('fragments', fragments, 365);
+    updateCurrencyDisplay();
 }
 
 function resetGame() {
@@ -124,6 +146,11 @@ function resetGame() {
     endScreen.style.display = 'none';
     noteIntervals = [];
     gameInterval = setInterval(createNote, 1000);
+}
+
+function updateCurrencyDisplay() {
+    coinsDisplay.innerText = `Coins: ${coins}`;
+    fragmentsDisplay.innerText = `Fragments: ${fragments}`;
 }
 
 pauseButton.addEventListener('click', () => {
@@ -147,4 +174,5 @@ gachaButton.addEventListener('click', () => {
 
 retryButton.addEventListener('click', resetGame);
 
+updateCurrencyDisplay();
 gameInterval = setInterval(createNote, 1000);
