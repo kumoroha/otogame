@@ -34,14 +34,35 @@ body {
     background-color: #ffffff;
 }
 
-#score-display, #rank-display, #pause-button, #gacha-button, #gacha-result {
-    margin: 5px;
-}
-
-#score-display, #rank-display {
+#status-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     position: absolute;
     top: 5px;
     left: 5px;
+    font-size: 1.5em;
+}
+
+#score-display, #rank-display {
+    margin: 0 10px;
+}
+
+#currency-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5em;
+}
+
+#coins-display, #fragments-display {
+    margin: 5px 0;
 }
 
 #pause-button {
@@ -69,6 +90,15 @@ body {
 #gacha-result {
     color: #fff;
     margin-top: 10px;
+}
+
+#judgement-display {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    color: #ff6347;
 }
 
 .hit-line {
