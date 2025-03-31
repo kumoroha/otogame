@@ -1,11 +1,21 @@
 const noteContainer = document.getElementById('note-container');
 const scoreDisplay = document.getElementById('score-display');
+const rankDisplay = document.getElementById('rank-display');
 const pauseButton = document.getElementById('pause-button');
 const gachaButton = document.getElementById('gacha-button');
 const gachaResult = document.getElementById('gacha-result');
+const endScreen = document.getElementById('end-screen');
+const finalScore = document.getElementById('final-score');
+const finalRank = document.getElementById('final-rank');
+const retryButton = document.getElementById('retry-button');
 let score = 0;
 let isPaused = false;
 let noteIntervals = [];
+let gameInterval;
+let hitLines = [
+    document.querySelector('.line1').offsetTop,
+    document.querySelector('.line2').offsetTop
+];
 
 const characters = [
     { name: '初音ミク', rank: '★1' },
@@ -18,8 +28,8 @@ const characters = [
 
 function setCookie(name, value, days) {
     const d = new Date();
-    d.setTime(d.getTime() + (days*24*60*60*1000));
-    const expires = "expires="+ d.toUTCString();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
@@ -27,7 +37,7 @@ function getCookie(name) {
     const cname = name + "=";
     const decodedCookie = decodeURIComponent(document.cookie);
     const ca = decodedCookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
@@ -63,14 +73,58 @@ function createNote() {
     note.addEventListener('click', () => {
         clearInterval(noteInterval);
         note.remove();
-        score += 100;
-        scoreDisplay.innerText = `Score: ${score}`;
+        let hitScore = calculateHitScore(parseInt(note.style.top));
+        score += hitScore;
+        updateScoreAndRank();
     });
 
     noteIntervals.push(noteInterval);
 }
 
-setInterval(createNote, 1000);
+function calculateHitScore(noteTop) {
+    if (noteTop >= hitLines[1] - 5 && noteTop <= hitLines[1] + 5) {
+        return 300;
+    } else if (noteTop >= hitLines[0] - 5 && noteTop <= hitLines[0] + 5) {
+        return 100;
+    } else {
+        return 50;
+    }
+}
+
+function updateScoreAndRank() {
+    scoreDisplay.innerText = `Score: ${score}`;
+    rankDisplay.innerText = `Rank: ${calculateRank(score)}`;
+}
+
+function calculateRank(score) {
+    if (score >= 10000) {
+        return 'S';
+    } else if (score >= 7500) {
+        return 'A';
+    } else if (score >= 5000) {
+        return 'B';
+    } else if (score >= 2500) {
+        return 'C';
+    } else {
+        return 'D';
+    }
+}
+
+function endGame() {
+    clearInterval(gameInterval);
+    noteIntervals.forEach(interval => clearInterval(interval));
+    endScreen.style.display = 'block';
+    finalScore.innerText = `Final Score: ${score}`;
+    finalRank.innerText = `Final Rank: ${calculateRank(score)}`;
+}
+
+function resetGame() {
+    score = 0;
+    updateScoreAndRank();
+    endScreen.style.display = 'none';
+    noteIntervals = [];
+    gameInterval = setInterval(createNote, 1000);
+}
 
 pauseButton.addEventListener('click', () => {
     isPaused = !isPaused;
@@ -90,3 +144,7 @@ gachaButton.addEventListener('click', () => {
         gachaResult.innerText = `ガチャ結果: ${result.name} ${result.rank}（既に所持）`;
     }
 });
+
+retryButton.addEventListener('click', resetGame);
+
+gameInterval = setInterval(createNote, 1000);
