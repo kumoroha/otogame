@@ -12,7 +12,7 @@ function createNote() {
 
     const note = document.createElement('div');
     note.classList.add('note');
-    note.style.left = `${Math.floor(Math.random() * 250)}px`;
+    note.style.left = `${Math.floor(Math.random() * 80)}vw`; // Adjusted to fit within the container
     note.style.top = '0px';
 
     noteContainer.appendChild(note);
@@ -20,7 +20,7 @@ function createNote() {
     let noteInterval = setInterval(() => {
         if (isPaused) return;
         let top = parseInt(note.style.top);
-        if (top < 550) {
+        if (top < (parseInt(noteContainer.style.height) || 80 * window.innerWidth / 100)) {
             note.style.top = `${top + 5}px`;
         } else {
             clearInterval(noteInterval);
