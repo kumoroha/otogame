@@ -1,38 +1,33 @@
-body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #282c34;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
 #game-container {
     position: relative;
     width: 300px;
     height: 600px;
     background-color: #000;
     border: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #note-container {
-    position: absolute;
-    top: 0;
+    position: relative;
     width: 100%;
-    height: 100%;
+    height: 80%;
 }
 
-.note {
-    position: absolute;
-    width: 50px;
-    height: 50px;
+#score-display, #pause-button, #gacha-button, #gacha-result {
+    margin: 5px;
+}
+
+#gacha-button {
+    padding: 10px;
     background-color: #ff6347;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
-#score-display {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
+#gacha-result {
+    color: #fff;
+    margin-top: 10px;
 }
