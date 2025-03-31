@@ -37,7 +37,21 @@ body {
     margin: 5px;
 }
 
-#pause-button, #gacha-button {
+#pause-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 10px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#gacha-button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
     padding: 10px;
     background-color: #ff6347;
     color: white;
